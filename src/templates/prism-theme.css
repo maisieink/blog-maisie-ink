@@ -1,0 +1,230 @@
+/*
+  Night Owl by Sarah Drasner
+
+  Adapted from prism port by Sara Vieira
+  https://github.com/SaraVieira/prism-theme-night-owl/blob/master/style.css
+
+  Light colors copied from
+  https://github.com/sdras/night-owl-vscode-theme/blob/master/themes/Night%20Owl-Light-color-theme.json
+*/
+
+body {
+  --night-owl-1: #403f53;
+  --night-owl-2: #e0e0e0;
+  --night-owl-3: #fbfbfb;
+  --night-owl-4: #989fb1;
+  --night-owl-5: #994cc3;
+  --night-owl-6: #0c969b;
+  --night-owl-7: #e64d49;
+  --night-owl-8: #0c969b;
+  --night-owl-9: #994cc3;
+  --night-owl-10: #bc5454;
+  --night-owl-11: #aa0982;
+  --night-owl-12: #4876d6;
+  --night-owl-13: #4876d6;
+  --night-owl-14: #111111;
+  --night-owl-15: #403f53;
+  --night-owl-16: #ffffff;
+  --highlight-1: #fed6ef;
+  --highlight-2: #ffecf8;
+}
+
+body.dark {
+  --night-owl-1: #d6deeb;
+  --night-owl-2: rgba(29, 59, 83, 0.99);
+  --night-owl-3: #011627;
+  --night-owl-4: rgb(99, 119, 119);
+  --night-owl-5: rgb(199, 146, 234);
+  --night-owl-6: rgb(178, 204, 214);
+  --night-owl-7: rgba(239, 83, 80, 0.56);
+  --night-owl-8: rgb(128, 203, 196);
+  --night-owl-9: rgb(127, 219, 202);
+  --night-owl-10: rgb(255, 88, 116);
+  --night-owl-11: rgb(247, 140, 108);
+  --night-owl-12: rgb(130, 170, 255);
+  --night-owl-13: rgb(173, 219, 103);
+  --night-owl-14: rgb(255, 203, 139);
+  --night-owl-15: rgb(214, 222, 235);
+  --night-owl-16: white;
+  --highlight-1: #1f4b5a;
+  --highlight-2: #04233d;
+}
+
+code[class*="language-"],
+pre[class*="language-"] {
+  color: var(--night-owl-1);
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+pre[class*="language-"]::-moz-selection,
+pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection,
+code[class*="language-"] ::-moz-selection {
+  text-shadow: none;
+  background: var(--night-owl-2);
+}
+
+pre[class*="language-"]::selection,
+pre[class*="language-"] ::selection,
+code[class*="language-"]::selection,
+code[class*="language-"] ::selection {
+  text-shadow: none;
+  background: var(--night-owl-2);
+}
+
+@media print {
+  code[class*="language-"],
+  pre[class*="language-"] {
+    text-shadow: none;
+  }
+}
+
+/* Code blocks */
+pre {
+  padding: 1em;
+  overflow: auto;
+}
+
+:not(pre) > code,
+pre {
+  color: var(--night-owl-16);
+  background: var(--night-owl-3);
+  border: 1px solid var(--rule-color);
+  box-sizing: border-box;
+  border-radius: 0.3em;
+}
+
+:not(pre) > code {
+  padding: 0.3em;
+  margin-left: 0.2em;
+  margin-right: 0.2em;
+  border-radius: 0.3em;
+  white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.cdata {
+  color: var(--night-owl-4);
+  font-style: italic;
+}
+
+.token.punctuation {
+  color: var(--night-owl-5);
+}
+
+.namespace {
+  color: var(--night-owl-6);
+}
+
+.token.deleted {
+  color: var(--night-owl-7);
+  font-style: italic;
+}
+
+.token.symbol,
+.token.property {
+  color: var(--night-owl-8);
+}
+
+.token.tag,
+.token.operator,
+.token.keyword {
+  color: var(--night-owl-9);
+}
+
+.token.boolean {
+  color: var(--night-owl-10);
+}
+
+.token.number {
+  color: var(--night-owl-11);
+}
+
+.token.constant,
+.token.function,
+.token.builtin,
+.token.char {
+  color: var(--night-owl-12);
+}
+
+.token.selector,
+.token.doctype {
+  color: var(--night-owl-5);
+  font-style: italic;
+}
+
+.token.attr-name,
+.token.inserted {
+  color: var(--night-owl-13);
+  font-style: italic;
+}
+
+.token.string,
+.token.url,
+.token.entity,
+.language-css .token.string,
+.style .token.string {
+  color: var(--night-owl-13);
+}
+
+.token.class-name,
+.token.atrule,
+.token.attr-value {
+  color: var(--night-owl-14);
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: var(--night-owl-15);
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+/* other code highlighting styles */
+
+div code[class*="language-"] {
+  white-space: normal;
+}
+
+.gatsby-highlight code[class*="language-"] {
+  white-space: pre;
+}
+
+.line-number {
+  color: var(--night-owl-4);
+}
+
+.gatsby-highlight-code-line {
+  display: block;
+  margin-left: -1em;
+  margin-right: -1em;
+  padding-right: 1em;
+  border-left: 0.5em solid var(--highlight-1);
+  padding-left: 0.5em;
+  background-color: var(--highlight-2);
+}

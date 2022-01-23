@@ -1,0 +1,108 @@
+.leds {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.left {
+  flex: 0 1 auto;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.right {
+  flex: 0 1 auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.led {
+  background-color: #ccc;
+  width: 16px;
+  height: 16px;
+  border-radius: 16px;
+  margin: 8px;
+}
+
+@media only screen and (max-width: 600px) {
+  .led {
+    display: none;
+  }
+
+  .led:nth-child(1),
+  .led:nth-child(2),
+  .led:nth-child(3) {
+    display: block;
+  }
+}
+
+.ledInner {
+  background-color: white;
+  width: 16px;
+  height: 16px;
+  border-radius: 16px;
+  opacity: 1;
+}
+
+.linearFade {
+  opacity: 0;
+  transition: 1.5s linear opacity;
+}
+
+.easeFade {
+  opacity: 0;
+  transition: 1.5s cubic-bezier(0.33, 1, 0.68, 1) opacity;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 24px;
+}
+
+.buttonContainer.multiple {
+  justify-content: space-between;
+}
+
+.buttonContainer button,
+.buttonContainer span {
+  margin-right: 12px;
+}
+
+.buttonContainer :last-child {
+  margin-right: 0;
+}
+
+.buttonContainer button {
+  /* TODO: probably move these variables to layout.css, some overlap with prism-theme highlight vars */
+  border: 1px solid #ffd5f0;
+  background-color: #ffecf8;
+  box-shadow: #ffe5f5 0px 1px 4px;
+  color: var(--header-color);
+  border-radius: 6px;
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: 0.08s background-color, border;
+}
+
+.buttonContainer button:hover {
+  background-color: #ffe5f5;
+}
+
+.buttonContainer button:active {
+  background-color: #feddf2;
+}
+
+body:global(.dark) .buttonContainer button {
+  background-color: #04233d;
+  border: 1px solid #265a6b;
+  box-shadow: #0d3047 0px 1px 4px;
+}
+
+body:global(.dark) .buttonContainer button:hover {
+  background-color: #0d3047;
+}
+
+body:global(.dark) .buttonContainer button:active {
+  background-color: #163e50;
+}

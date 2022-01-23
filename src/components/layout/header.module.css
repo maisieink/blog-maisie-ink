@@ -1,0 +1,101 @@
+.siteTitle {
+  display: flex;
+  font-size: 24px;
+  justify-content: center;
+  position: relative;
+  z-index: 1; /* just for stacking context */
+}
+
+.siteTitleLink {
+  display: block;
+  flex: 0 0 auto;
+  padding: 1em;
+  color: var(--body-color);
+  text-decoration: none;
+}
+
+.firstName,
+.lastName {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+  padding-left: 0.8em;
+  padding-right: 0.8em;
+  text-transform: lowercase;
+}
+
+.firstName::before,
+.lastName::before {
+  display: block;
+  content: "";
+  padding-bottom: calc(50% + 0.8em);
+}
+
+.firstName::after,
+.lastName::after {
+  display: block;
+  content: "";
+  padding-bottom: calc(50% + 0.8em);
+}
+
+.text {
+  position: relative;
+  z-index: 2;
+}
+
+.circleBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 100%;
+  transition: 0.2s opacity;
+  z-index: 1;
+}
+
+body:global(.dark) .circleBackground {
+  mix-blend-mode: hard-light;
+}
+
+.siteTitleLink:hover .circleBackground {
+  opacity: 0.8;
+}
+
+.firstName .circleBackground {
+  background-color: rgba(255, 128, 202, 0.25);
+}
+
+.firstName {
+  margin-right: -0.8em;
+}
+
+.lastName .circleBackground {
+  background-color: rgba(23, 187, 227, 0.25);
+}
+
+.lastName {
+  margin-left: -0.8em;
+}
+
+.bio {
+  margin-top: 1.5em;
+  border-top: 1px solid var(--rule-color);
+  padding-top: 1.5em;
+  border-bottom: 1px solid var(--rule-color);
+  padding-bottom: 1.5em;
+  display: flex;
+  align-items: center;
+  transition: 0.2s border-color;
+}
+
+.bioInfoLineLinks {
+  text-transform: lowercase;
+}
+
+.bioImage {
+  border-radius: 64px;
+  display: block;
+  flex: 0 0 auto;
+  margin-right: 1em;
+}

@@ -1,0 +1,35 @@
+.blogPost {
+  margin-top: -1.5em; /* TODO make header/logo follow vertical rhythm from typography.js */
+}
+
+.blogPostLinks {
+  text-transform: lowercase;
+  text-align: center;
+}
+
+.blogPostLinks a {
+  white-space: nowrap;
+}
+
+:global(.gatsby-resp-image-wrapper),
+:global(.youtube-embed) {
+  box-shadow: 0 6px 17px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+:global(.youtube-embed) {
+  width: 100%;
+}
+
+:global(.gatsby-resp-image-image) {
+  transition: 0.2s box-shadow;
+}
+
+:global(.autolink-header) {
+  color: currentColor;
+}
+
+:global(.autolink-header) svg {
+  fill: currentColor;
+}
