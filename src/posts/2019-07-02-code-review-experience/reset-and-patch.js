@@ -9,11 +9,11 @@ const ResetAndPatch = () => (
     title="📁 ~/example — git status — Terminal"
     code={`maisie@macbook $ git fetch
  
-maisie@macbook $ git rebase origin/master
+maisie@macbook $ git rebase origin/main
  
 Current branch add-increment-by-amount-util-function is up to date.
  
-maisie@macbook $ git reset origin/master
+maisie@macbook $ git reset origin/main
  
 Unstaged changes after reset:
  M	src/__tests__/utils.tests.js

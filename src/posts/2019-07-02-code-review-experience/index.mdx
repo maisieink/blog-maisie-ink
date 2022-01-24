@@ -68,9 +68,9 @@ The technique involves resetting my entire commit history and starting over. I r
 - `git checkout -b branch-name-after-rebase`
   - Create a new branch, in case I mess things up. (I know I can use the reflog to get back into a good state. Having another branch just makes me feel safer ok 😅)
 - `git fetch`
-- `git rebase origin/master`
-  - Keep my branch up-to-date with master. Optional, but I’d rather fix any conflicts now. (If you run into the same conflict multiple times, I recommend [squashing into one commit](https://stackoverflow.com/questions/5189560/squash-my-last-x-commits-together-using-git/5189600) before rebasing on origin/master.)
-- `git reset origin/master`
+- `git rebase origin/main`
+  - Keep my branch up-to-date with main. Optional, but I’d rather fix any conflicts now. (If you run into the same conflict multiple times, I recommend [squashing into one commit](https://stackoverflow.com/questions/5189560/squash-my-last-x-commits-together-using-git/5189600) before rebasing on origin/main.)
+- `git reset origin/main`
   - Remove all my commits, but leave my changes on the filesystem.
 
 Afterward, it will look like I made all of my changes, but haven’t actually committed anything.
@@ -145,7 +145,7 @@ This “history rewrite” is a little more tricky, since it requires committing
 
 To start with, we’ll run an interactive rebase, which allows us to change commits.
 
-- `git rebase -i origin/master`
+- `git rebase -i origin/main`
 
 In the editor that pops up, change the commit we want to split from `pick` to `edit` (press `i` to enter insert mode in vim). That means the rebase will stop and let us edit the commit.
 
@@ -229,7 +229,7 @@ I leave this here non-sarcastically 😂. For some PRs, if rewriting commit hist
 
 Now that I’ve restructured my commits, I can go back and write commit messages! (yes I really do everything at the last minute!)
 
-- `git rebase -i origin/master`
+- `git rebase -i origin/main`
   - set every commit to `reword` (or `r`)
 
 <RewordRebase />
