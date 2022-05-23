@@ -8,9 +8,9 @@ module.exports = {
     shortDescription: "maisie's blog with thoughts & non-thoughts",
     rootUrl: "https://blog.maisie.ink",
     twitterUrl: "https://twitter.com/maisieink",
-    githubUrl: "https://github.com/maisie-ink",
+    githubUrl: "https://github.com/maisieink",
     aboutMeUrl: "https://maisie.ink/",
-    repoRootUrl: "https://github.com/maisie-ink/blog-maisie-ink",
+    repoRootUrl: "https://github.com/maisieink/blog-maisie-ink",
     repoMainTree: "/tree/main",
   },
   plugins: [

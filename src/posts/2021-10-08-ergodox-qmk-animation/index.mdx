@@ -75,7 +75,7 @@ Yay! We're ready to start making changes to the source code.
 
 ## Building the LED animation
 
-Now, I'll walk you through my process for building the `disco_mode` animation! If you just want to see the final source code: [maisie-ink/qmk_firmware/keymap.c](https://github.com/maisie-ink/qmk_firmware/blob/023d2a6c0e05186a1ebc80d30ff60b8857ea4990/keyboards/ergodox_ez/shine/keymaps/maisie/keymap.c#L554-L654).
+Now, I'll walk you through my process for building the `disco_mode` animation! If you just want to see the final source code: [maisieink/qmk_firmware/keymap.c](https://github.com/maisieink/qmk_firmware/blob/023d2a6c0e05186a1ebc80d30ff60b8857ea4990/keyboards/ergodox_ez/shine/keymaps/maisie/keymap.c#L554-L654).
 
 <InfoBlock>
   <Disclaimer />
@@ -466,4 +466,4 @@ If you're interested in further exploration, I added some additional features th
 - Made LEDs near the keypress brightest, and LEDs further from the keypress dimmer.
 - Used the [lower-level functions](https://beta.docs.qmk.fm/using-qmk/hardware-features/lighting/feature_rgblight#utility-functions) `sethsv` and `rgblight_set` manually. By making that change, I reduced the number of calls to `rgblight_set` and resolved some intermittent flickering behavior.
 
-You can look at the [final source code](https://github.com/maisie-ink/qmk_firmware/blob/023d2a6c0e05186a1ebc80d30ff60b8857ea4990/keyboards/ergodox_ez/shine/keymaps/maisie/keymap.c#L554-L654) to see how those features are implemented. Thanks for reading! 👋
+You can look at the [final source code](https://github.com/maisieink/qmk_firmware/blob/023d2a6c0e05186a1ebc80d30ff60b8857ea4990/keyboards/ergodox_ez/shine/keymaps/maisie/keymap.c#L554-L654) to see how those features are implemented. Thanks for reading! 👋
