@@ -29,44 +29,64 @@ function getCssPath(inward, sideways) {
 const Gooey = ({ color }) => {
   const containerRef = useRef();
   const pathRef = useRef();
-  const requestId = useRef(null);
-  const mouseEvent = useRef(null);
   const basePath = useMemo(() => getPath(0, 0), []);
 
-  const onAnimationFrame = useCallback(() => {
-    if (containerRef.current && pathRef.current) {
-      // TODO: Evaluate / improve perf? Does this reflow? Save once and recalc on window resize?
-      const rect = containerRef.current.getBoundingClientRect();
+  const onMouseMove = useMemo(() => {
+    let requestId = null;
+    let currentMouseEvent = null;
+    let prevMouseEvent = null;
 
-      const x = mouseEvent.current.pageX - (rect.left + rect.right) / 2;
-      const y = mouseEvent.current.pageY - (rect.top + rect.bottom) / 2;
+    const onAnimationFrame = () => {
+      if (
+        containerRef.current &&
+        pathRef.current &&
+        currentMouseEvent &&
+        prevMouseEvent
+      ) {
+        // TODO: Evaluate / improve perf? Does this reflow? Save once and recalc on window resize?
+        const rect = containerRef.current.getBoundingClientRect();
+        const centerX = (rect.left + rect.right) / 2 + window.scrollX;
+        const centerY = (rect.top + rect.bottom) / 2 + window.scrollY;
 
-      if (x * x + y * y > (rect.width * rect.width) / 4) {
-        pathRef.current.style.d = getCssPath(0, 0);
-      } else {
-        pathRef.current.style.d = getCssPath(y, x);
+        const x = currentMouseEvent.pageX - centerX;
+        const y = currentMouseEvent.pageY - centerY;
+        const prevX = prevMouseEvent.pageX - centerX;
+        const prevY = prevMouseEvent.pageY - centerY;
+
+        const maxRadiusSqr = (rect.width / 2) ** 2;
+        const minRadiusSqr = maxRadiusSqr / 4;
+        const prevRadiusSqr = prevX ** 2 + prevY ** 2;
+        const radiusSqr = x ** 2 + y ** 2;
+
+        if (radiusSqr > maxRadiusSqr) {
+          pathRef.current.style.d = getCssPath(0, 0);
+        } else {
+          pathRef.current.style.d = getCssPath(y, x);
+        }
       }
-    }
 
-    requestId.current = null;
-  }, []);
+      prevMouseEvent = currentMouseEvent;
+      console.log(prevMouseEvent);
+      requestId = null;
+    };
 
-  const onMouseMove = useCallback(
-    (event) => {
+    const onMouseMoveClosure = (event) => {
       if (event.pageY > 300) {
         return;
       }
 
-      mouseEvent.current = event;
+      currentMouseEvent = event;
 
-      if (requestId.current === null) {
-        requestId.current = requestAnimationFrame(onAnimationFrame);
+      if (requestId === null) {
+        requestId = requestAnimationFrame(onAnimationFrame);
       }
-    },
-    [onAnimationFrame]
-  );
+    };
+
+    return onMouseMoveClosure;
+  }, []);
 
   useEffect(() => {
+    // TODO: Make a smaller div to attach here
     document.addEventListener("mousemove", onMouseMove);
 
     return () => document.removeEventListener("mousemove", onMouseMove);
