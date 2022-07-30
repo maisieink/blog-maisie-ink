@@ -5,6 +5,7 @@ import Img from "gatsby-image";
 import ThemeToggleButton from "./theme-toggle-button";
 
 import * as styles from "./header.module.css";
+import Gooey from "./gooey";
 
 const Header = ({ className, minimal }) => {
   const data = useStaticQuery(graphql`
@@ -42,14 +43,18 @@ const Header = ({ className, minimal }) => {
     <header className={className}>
       <div className={styles.siteTitle}>
         <Link to="/" className={styles.siteTitleLink}>
-          <span className={styles.firstName}>
-            <span className={styles.circleBackground}></span>
+          <div className={styles.firstName}>
+            <div className={styles.circleBackground}>
+              <Gooey color="pink" />
+            </div>
             <span className={styles.text}>{firstName}</span>
-          </span>{" "}
-          <span className={styles.lastName}>
-            <span className={styles.circleBackground}></span>
+          </div>{" "}
+          <div className={styles.lastName}>
+            <div className={styles.circleBackground}>
+              <Gooey color="blue" />
+            </div>
             <span className={styles.text}>{lastName}</span>
-          </span>
+          </div>
         </Link>
       </div>
 

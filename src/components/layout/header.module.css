@@ -44,34 +44,16 @@
 }
 
 .circleBackground {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 100%;
+  opacity: 1;
   transition: 0.2s opacity;
-  z-index: 1;
-}
-
-body:global(.dark) .circleBackground {
-  mix-blend-mode: hard-light;
 }
 
 .siteTitleLink:hover .circleBackground {
-  opacity: 0.8;
-}
-
-.firstName .circleBackground {
-  background-color: rgba(255, 128, 202, 0.25);
+  /*opacity: 0.8;*/
 }
 
 .firstName {
   margin-right: -0.8em;
-}
-
-.lastName .circleBackground {
-  background-color: rgba(23, 187, 227, 0.25);
 }
 
 .lastName {
