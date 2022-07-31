@@ -1,8 +1,13 @@
 .siteTitle {
   display: flex;
-  font-size: 24px;
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
+  /* TODO: adjust h1 top margin match before, it used to collapse when this padding was margin */
   justify-content: center;
   position: relative;
+  /* TODO: move side padding into this div, so it doesn't cut off on small screen sizes */
+  overflow: hidden; /* prevent scrollbars from the oversized Gooey svgs */
+
   z-index: 1; /* just for stacking context */
 }
 
@@ -10,6 +15,7 @@
   display: block;
   flex: 0 0 auto;
   padding: 1em;
+  font-size: 24px;
   color: var(--body-color);
   text-decoration: none;
 }
@@ -48,9 +54,13 @@
   transition: 0.2s opacity;
 }
 
-.siteTitleLink:hover .circleBackground {
-  /*opacity: 0.8;*/
+/*
+@media (prefers-reduced-motion) {
+  .siteTitleLink:hover .circleBackground {
+    opacity: 0.8;
+  }
 }
+*/
 
 .firstName {
   margin-right: -0.8em;
@@ -61,7 +71,6 @@
 }
 
 .bio {
-  margin-top: 1.5em;
   border-top: 1px solid var(--rule-color);
   padding-top: 1.5em;
   border-bottom: 1px solid var(--rule-color);

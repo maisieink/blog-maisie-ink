@@ -1,32 +1,27 @@
-import React, { useRef, useMemo, useEffect } from "react";
+import React, {
+  useRef,
+  useMemo,
+  useEffect,
+  useState,
+  useCallback,
+} from "react";
 import classNames from "classnames";
 
 import * as styles from "./gooey.module.css";
 
 function getPath(x, y) {
-  return `
-    M ${128 + x},
-    ${y} C ${128 + x},
-    ${70.692448 + y}  70.692448,
-    128        0,
-    128       -70.692448,
-    128       -128,
-    70.692448 -128,
-    0 c 0,
-    -70.692448 57.307552,
-    -128       128,
-    -128       70.692448,
-    0          ${128 + x},
-    ${57.307552 + y}  ${128 + x},
-    ${128 + y} z
-  `.replace(/\n/g, "");
+  return `M ${128 + x},${y} C ${128 + x},${
+    70.692448 + y
+  } 70.692448,128 0,128 -70.692448,128 -128,70.692448 -128,0 c 0,-70.692448 57.307552,-128 128,-128 70.692448,0 ${
+    128 + x
+  },${57.307552 + y} ${128 + x},${128 + y} z`;
 }
 
 function getCssPath(inward, sideways) {
   return `path("${getPath(inward, sideways)}")`;
 }
 
-const Gooey = ({ color }) => {
+const Gooey = ({ color, addMouseHandler, removeMouseHandler }) => {
   const containerRef = useRef();
   const pathRef = useRef();
   const basePath = useMemo(() => getPath(0, 0), []);
@@ -87,6 +82,7 @@ const Gooey = ({ color }) => {
           const transformedY = (x * -unitY + y * unitX) / (rect.width / 512);
 
           if (
+            currentMouseEvent.type === "mouseleave" ||
             transformedX < -32 ||
             transformedX > 128 ||
             transformedX ** 2 + transformedY ** 2 > 128 ** 2 ||
@@ -121,10 +117,6 @@ const Gooey = ({ color }) => {
     };
 
     const onMouseMoveClosure = (event) => {
-      if (event.pageY > 300) {
-        return;
-      }
-
       currentMouseEvent = event;
 
       if (requestId === null) {
@@ -136,12 +128,9 @@ const Gooey = ({ color }) => {
   }, []);
 
   useEffect(() => {
-    // TODO: Make a smaller div to attach here. overflow:hidden on the div too
-    // TODO: mouseleave event as well?
-    document.addEventListener("mousemove", onMouseMove);
-
-    return () => document.removeEventListener("mousemove", onMouseMove);
-  }, [onMouseMove]);
+    addMouseHandler(onMouseMove);
+    return () => removeMouseHandler(onMouseMove);
+  }, [onMouseMove, addMouseHandler, removeMouseHandler]);
 
   return (
     <div className={styles.container} ref={containerRef}>
@@ -168,3 +157,51 @@ const Gooey = ({ color }) => {
 };
 
 export default Gooey;
+
+/**
+ * This is a bit verbose, but it's just a way for the child Gooey
+ * components to listen to mousemove and mouseleave events from
+ * the parent component container. This is necessary since the Gooeys
+ * overlap, so attaching a mousemove handler to themselves would
+ * mean only the top z-index gets the pointer events.
+ */
+function useEventHandlers() {
+  const [eventHandlers, setEventHandlers] = useState([]);
+
+  const eventHandler = useCallback(
+    (event) => {
+      for (const handler of eventHandlers) {
+        handler(event);
+      }
+    },
+    [eventHandlers]
+  );
+
+  const addEventHandler = useCallback((handler) => {
+    setEventHandlers((prevEventHandlers) => [...prevEventHandlers, handler]);
+  }, []);
+
+  const removeEventHandler = useCallback((handler) => {
+    setEventHandlers((prevEventHandlers) =>
+      prevEventHandlers.filter((prevHandler) => prevHandler !== handler)
+    );
+  }, []);
+
+  return [eventHandler, addEventHandler, removeEventHandler];
+}
+
+export function useMouseEventContainer() {
+  const [onMouseEvent, addMouseHandler, removeMouseHandler] =
+    useEventHandlers();
+
+  return {
+    containerProps: {
+      onMouseMove: onMouseEvent,
+      onMouseLeave: onMouseEvent,
+    },
+    gooeyProps: {
+      addMouseHandler,
+      removeMouseHandler,
+    },
+  };
+}
