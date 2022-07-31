@@ -1,24 +1,24 @@
-import React, { useRef, useMemo, useCallback, useEffect } from "react";
+import React, { useRef, useMemo, useEffect } from "react";
 import classNames from "classnames";
 
 import * as styles from "./gooey.module.css";
 
-function getPath(inward, sideways) {
+function getPath(x, y) {
   return `
-    m -64,
-    -128 c 0,
-    35.346              -28.654,
-    64                  -64,
-    64                  -35.346,
-    0                   -64,
-    -28.654             -64,
-    -64                 0,
-    -35.346             ${28.654 + sideways},
-    ${-64 + inward}     ${64 + sideways},
-    ${-64 + inward}     35.346,
-    0                   ${64 - sideways},
-    ${28.654 - inward}  ${64 - sideways},
-    ${64 - inward} z
+    M ${128 + x},
+    ${y} C ${128 + x},
+    ${70.692448 + y}  70.692448,
+    128        0,
+    128       -70.692448,
+    128       -128,
+    70.692448 -128,
+    0 c 0,
+    -70.692448 57.307552,
+    -128       128,
+    -128       70.692448,
+    0          ${128 + x},
+    ${57.307552 + y}  ${128 + x},
+    ${128 + y} z
   `.replace(/\n/g, "");
 }
 
@@ -77,28 +77,25 @@ const Gooey = ({ color }) => {
           unitX = x / radius;
           unitY = y / radius;
 
-          // The matrix doesn't quite match the standard rotation matrix
-          // since I'm subtracting 90deg, since the svg extends upward
-          // TODO: make new svg that extends rightward?
-          pathRef.current.style.transform = `matrix(${-unitY}, ${unitX}, ${-unitX}, ${-unitY}, 0, 0)`;
+          pathRef.current.style.transform = `matrix(${unitX}, ${unitY}, ${-unitY}, ${unitX}, 0, 0)`;
           pathRef.current.style.transition = "none";
         }
 
-        if (unitX !== null && unitY !== null && animating == false) {
-          // TODO: make new svg so this matrix is more standard
-          const transformedX = x * -unitY - y * -unitX;
-          const transformedY = x * -unitX + y * -unitY;
-          const upward = transformedY + rect.width / 4;
+        if (unitX !== null && unitY !== null && animating === false) {
+          const transformedX =
+            (x * unitX + y * unitY) / (rect.width / 512) - 128;
+          const transformedY = (x * -unitY + y * unitX) / (rect.width / 512);
 
           if (
-            -transformedY < rect.width / 5.5 ||
-            -transformedY > rect.width / 2.2 || // should be 2, but a little buffer so it doesnt get cut off
-            Math.abs(transformedX) > -transformedY - rect.width / 8
+            transformedX < -32 ||
+            transformedX > 128 ||
+            transformedX ** 2 + transformedY ** 2 > 128 ** 2 ||
+            Math.abs(transformedY) > Math.abs(transformedX) + 32
           ) {
             animating = true;
 
             setTimeout(() => {
-              const time = (Math.abs(upward) / (rect.width / 4)) * 0.5 + 0.2;
+              const time = (Math.abs(transformedX) / 128) * 0.5 + 0.2;
 
               if (pathRef.current) {
                 pathRef.current.style.transition = `d ${time}s cubic-bezier(.6,.22,.47,1.57)`;
@@ -113,11 +110,8 @@ const Gooey = ({ color }) => {
               }, time * 1000);
             }, 100);
           } else {
-            //const upward = transformedY + rect.width / 4;
-            //const sideways = transformedX;
-
             pathRef.current.style.transition = "d 0.1s";
-            pathRef.current.style.d = getCssPath(upward, transformedX);
+            pathRef.current.style.d = getCssPath(transformedX, transformedY);
           }
         }
       }
@@ -150,16 +144,12 @@ const Gooey = ({ color }) => {
   }, [onMouseMove]);
 
   return (
-    <div
-      className={styles.container}
-      onMouseMove={onMouseMove}
-      ref={containerRef}
-    >
+    <div className={styles.container} ref={containerRef}>
       <svg
         width="512"
         height="512"
         version="1.1"
-        viewBox="-256 -256 256 256"
+        viewBox="-256 -256 512 512"
         xmlns="http://www.w3.org/2000/svg"
         className={styles.circleSvg}
       >
