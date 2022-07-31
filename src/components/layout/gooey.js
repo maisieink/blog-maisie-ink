@@ -35,7 +35,8 @@ const Gooey = ({ color }) => {
     let requestId = null;
     let currentMouseEvent = null;
     let prevMouseEvent = null;
-    let rotation = null;
+    let unitX = null;
+    let unitY = null;
 
     const onAnimationFrame = () => {
       if (
@@ -60,27 +61,39 @@ const Gooey = ({ color }) => {
         const radiusSqr = x ** 2 + y ** 2;
 
         if (prevRadiusSqr < minRadiusSqr && radiusSqr > minRadiusSqr) {
-          rotation = Math.atan2(y, x) + Math.PI / 2;
-          pathRef.current.style.transform = `rotate(${rotation}rad)`;
+          const radius = Math.sqrt(radiusSqr);
+          unitX = x / radius;
+          unitY = y / radius;
+
+          // The matrix doesn't quite match the standard rotation matrix
+          // since I'm subtracting 90deg, since the svg extends upward
+          pathRef.current.style.transform = `matrix(${-unitY}, ${unitX}, ${-unitX}, ${-unitY}, 0, 0)`;
         }
 
-        if (radiusSqr > maxRadiusSqr) {
+        const transformedX = x * -unitY - y * -unitX;
+        const transformedY = x * -unitX + y * -unitY;
+
+        if (
+          -transformedY < rect.width / 4 ||
+          -transformedY > rect.width / 2.1 || // should be 2, but a little buffer so it doesnt get cut off
+          Math.abs(transformedX) > -transformedY - rect.width / 8
+        ) {
           pathRef.current.style.transition =
             "d 0.7s cubic-bezier(.6,.22,.47,1.57)";
           //pathRef.current.offsetWidth; // eslint-disable-line no-unused-expressions
           pathRef.current.style.d = getCssPath(0, 0);
-          rotation = null;
-        } else if (rotation !== null) {
-          pathRef.current.style.transition = "d 0.1s";
-          pathRef.current.style.d = getCssPath(
-            /*y, x*/ -Math.sqrt(Math.max(radiusSqr - minRadiusSqr, 0)) / 2,
-            0
-          );
+          unitX = null;
+          unitY = null;
+        } else if (unitX !== null && unitY !== null) {
+          const upward = transformedY + rect.width / 4;
+          const sideways = transformedX;
+
+          pathRef.current.style.transition = "d 0.05s";
+          pathRef.current.style.d = getCssPath(upward, sideways);
         }
       }
 
       prevMouseEvent = currentMouseEvent;
-      console.log(prevMouseEvent);
       requestId = null;
     };
 
