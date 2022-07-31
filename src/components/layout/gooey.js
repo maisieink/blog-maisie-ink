@@ -35,6 +35,7 @@ const Gooey = ({ color }) => {
     let requestId = null;
     let currentMouseEvent = null;
     let prevMouseEvent = null;
+    let rotation = null;
 
     const onAnimationFrame = () => {
       if (
@@ -58,10 +59,23 @@ const Gooey = ({ color }) => {
         const prevRadiusSqr = prevX ** 2 + prevY ** 2;
         const radiusSqr = x ** 2 + y ** 2;
 
+        if (prevRadiusSqr < minRadiusSqr && radiusSqr > minRadiusSqr) {
+          rotation = Math.atan2(y, x) + Math.PI / 2;
+          pathRef.current.style.transform = `rotate(${rotation}rad)`;
+        }
+
         if (radiusSqr > maxRadiusSqr) {
+          pathRef.current.style.transition =
+            "d 0.7s cubic-bezier(.6,.22,.47,1.57)";
+          //pathRef.current.offsetWidth; // eslint-disable-line no-unused-expressions
           pathRef.current.style.d = getCssPath(0, 0);
-        } else {
-          pathRef.current.style.d = getCssPath(y, x);
+          rotation = null;
+        } else if (rotation !== null) {
+          pathRef.current.style.transition = "d 0.1s";
+          pathRef.current.style.d = getCssPath(
+            /*y, x*/ -Math.sqrt(Math.max(radiusSqr - minRadiusSqr, 0)) / 2,
+            0
+          );
         }
       }
 
