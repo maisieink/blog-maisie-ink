@@ -60,7 +60,12 @@ const Gooey = ({ color }) => {
         const prevRadiusSqr = prevX ** 2 + prevY ** 2;
         const radiusSqr = x ** 2 + y ** 2;
 
-        if (prevRadiusSqr < minRadiusSqr && radiusSqr > minRadiusSqr) {
+        if (
+          unitX === null &&
+          unitY === null &&
+          ((prevRadiusSqr < minRadiusSqr && radiusSqr > minRadiusSqr) ||
+            (prevRadiusSqr > minRadiusSqr && radiusSqr < minRadiusSqr))
+        ) {
           const radius = Math.sqrt(radiusSqr);
           unitX = x / radius;
           unitY = y / radius;
@@ -70,26 +75,29 @@ const Gooey = ({ color }) => {
           pathRef.current.style.transform = `matrix(${-unitY}, ${unitX}, ${-unitX}, ${-unitY}, 0, 0)`;
         }
 
-        const transformedX = x * -unitY - y * -unitX;
-        const transformedY = x * -unitX + y * -unitY;
-
-        if (
-          -transformedY < rect.width / 4 ||
-          -transformedY > rect.width / 2.1 || // should be 2, but a little buffer so it doesnt get cut off
-          Math.abs(transformedX) > -transformedY - rect.width / 8
-        ) {
-          pathRef.current.style.transition =
-            "d 0.7s cubic-bezier(.6,.22,.47,1.57)";
-          //pathRef.current.offsetWidth; // eslint-disable-line no-unused-expressions
-          pathRef.current.style.d = getCssPath(0, 0);
-          unitX = null;
-          unitY = null;
-        } else if (unitX !== null && unitY !== null) {
+        if (unitX !== null && unitY !== null) {
+          const transformedX = x * -unitY - y * -unitX;
+          const transformedY = x * -unitX + y * -unitY;
           const upward = transformedY + rect.width / 4;
-          const sideways = transformedX;
 
-          pathRef.current.style.transition = "d 0.05s";
-          pathRef.current.style.d = getCssPath(upward, sideways);
+          if (
+            -transformedY < rect.width / 5.5 ||
+            -transformedY > rect.width / 2.2 || // should be 2, but a little buffer so it doesnt get cut off
+            Math.abs(transformedX) > -transformedY - rect.width / 8
+          ) {
+            const time = (Math.abs(upward) / (rect.width / 4)) * 0.5 + 0.2;
+            pathRef.current.style.transition = `d ${time}s cubic-bezier(.6,.22,.47,1.57)`;
+            //pathRef.current.offsetWidth; // eslint-disable-line no-unused-expressions
+            pathRef.current.style.d = getCssPath(0, 0);
+            unitX = null;
+            unitY = null;
+          } else {
+            //const upward = transformedY + rect.width / 4;
+            //const sideways = transformedX;
+
+            pathRef.current.style.transition = "d 0.1s";
+            pathRef.current.style.d = getCssPath(upward, transformedX);
+          }
         }
       }
 
