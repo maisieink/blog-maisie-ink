@@ -37,6 +37,9 @@ const Gooey = ({ color }) => {
     let prevMouseEvent = null;
     let unitX = null;
     let unitY = null;
+    let animating = false;
+    // TODO: make this into a state machine to be more readable?
+    // 'NEUTRAL' -> 'STRETCHING' -> 'ANIMATING' -> 'NEUTRAL'
 
     const onAnimationFrame = () => {
       if (
@@ -63,8 +66,12 @@ const Gooey = ({ color }) => {
         if (
           unitX === null &&
           unitY === null &&
+          animating === false &&
           ((prevRadiusSqr < minRadiusSqr && radiusSqr > minRadiusSqr) ||
-            (prevRadiusSqr > minRadiusSqr && radiusSqr < minRadiusSqr))
+            false) /*(prevRadiusSqr > minRadiusSqr && radiusSqr < minRadiusSqr)*/
+          // TODO: allow inward wobbles? might need to enqueue the exit wobble onto
+          // a promise or something, since currently it's still animating when the
+          // mouse leaves.
         ) {
           const radius = Math.sqrt(radiusSqr);
           unitX = x / radius;
@@ -72,10 +79,13 @@ const Gooey = ({ color }) => {
 
           // The matrix doesn't quite match the standard rotation matrix
           // since I'm subtracting 90deg, since the svg extends upward
+          // TODO: make new svg that extends rightward?
           pathRef.current.style.transform = `matrix(${-unitY}, ${unitX}, ${-unitX}, ${-unitY}, 0, 0)`;
+          pathRef.current.style.transition = "none";
         }
 
-        if (unitX !== null && unitY !== null) {
+        if (unitX !== null && unitY !== null && animating == false) {
+          // TODO: make new svg so this matrix is more standard
           const transformedX = x * -unitY - y * -unitX;
           const transformedY = x * -unitX + y * -unitY;
           const upward = transformedY + rect.width / 4;
@@ -85,12 +95,23 @@ const Gooey = ({ color }) => {
             -transformedY > rect.width / 2.2 || // should be 2, but a little buffer so it doesnt get cut off
             Math.abs(transformedX) > -transformedY - rect.width / 8
           ) {
-            const time = (Math.abs(upward) / (rect.width / 4)) * 0.5 + 0.2;
-            pathRef.current.style.transition = `d ${time}s cubic-bezier(.6,.22,.47,1.57)`;
-            //pathRef.current.offsetWidth; // eslint-disable-line no-unused-expressions
-            pathRef.current.style.d = getCssPath(0, 0);
-            unitX = null;
-            unitY = null;
+            animating = true;
+
+            setTimeout(() => {
+              const time = (Math.abs(upward) / (rect.width / 4)) * 0.5 + 0.2;
+
+              if (pathRef.current) {
+                pathRef.current.style.transition = `d ${time}s cubic-bezier(.6,.22,.47,1.57)`;
+                //pathRef.current.offsetWidth; // eslint-disable-line no-unused-expressions
+                pathRef.current.style.d = getCssPath(0, 0);
+              }
+
+              setTimeout(() => {
+                unitX = null;
+                unitY = null;
+                animating = false;
+              }, time * 1000);
+            }, 100);
           } else {
             //const upward = transformedY + rect.width / 4;
             //const sideways = transformedX;
@@ -121,7 +142,8 @@ const Gooey = ({ color }) => {
   }, []);
 
   useEffect(() => {
-    // TODO: Make a smaller div to attach here
+    // TODO: Make a smaller div to attach here. overflow:hidden on the div too
+    // TODO: mouseleave event as well?
     document.addEventListener("mousemove", onMouseMove);
 
     return () => document.removeEventListener("mousemove", onMouseMove);
