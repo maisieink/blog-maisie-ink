@@ -7,7 +7,6 @@
   position: relative;
   /* TODO: move side padding into this div, so it doesn't cut off on small screen sizes */
   overflow: hidden; /* prevent scrollbars from the oversized Gooey svgs */
-
   z-index: 1; /* just for stacking context */
 }
 
