@@ -5,10 +5,12 @@
  * - performance testing
  * - browser testing (fallback for safari?)
  * - prefers-reduced-motion
+ * - move out of useMemo into ref
+ * - move measurement functions into event handler
  * - fix h1 top margin on blog post pages, it moved down fro main
  * - fix side margins on logo overflow:hidden when browser window is narrow
  * - should I add more padding around the logo to be able to stretch up/down?
- *
+ * - make it pick up on faster mouse movements (?) (sub-frame cascaded events?)
  */
 
 import React, {
@@ -86,7 +88,9 @@ const Gooey = ({ color, addMouseHandler, removeMouseHandler }) => {
    *
    * For performance, we're modifying the DOM nodes directly, and keeping
    * mutable state inside the useMemo closure. This component does not follow
-   * React conventions.
+   * React conventions. TODO: Move out of useMemo and into a ref, since useMemo
+   * isn't guaranteed to only run once. TODO: Is this actually faster than a
+   * setState -> re-render with style attribute?
    *
    * I could probably split this up some more into multiple functions to make
    * it more readable (with function names instead of comments), but this is
@@ -112,13 +116,14 @@ const Gooey = ({ color, addMouseHandler, removeMouseHandler }) => {
         mouseEvent.prev
       ) {
         // TODO: Do perf testing to make sure that this doesn't reflow if nothing
-        // has changed since the last call? Do I need to do this measurement in
-        // the animation frame vs the event handler?
+        // has changed since the last call? TODO: Move this measurement in
+        // the the event handler instead of animation frame to make layout thrashing less likely
         const rect = containerRef.current.getBoundingClientRect();
         const centerX = (rect.left + rect.right) / 2 + window.scrollX;
         const centerY = (rect.top + rect.bottom) / 2 + window.scrollY;
         const circleRadius = rect.width / 4;
 
+        // TODO: use clientX/Y to avoid adding scrollX/scrollY
         const mouseX = mouseEvent.current.pageX - centerX;
         const mouseY = mouseEvent.current.pageY - centerY;
 
@@ -183,6 +188,8 @@ const Gooey = ({ color, addMouseHandler, removeMouseHandler }) => {
              * it's been stretched "too far."
              */
             if (
+              // TODO: Just call collapse directly on mouseleave with a separate
+              // handler?
               mouseEvent.current.type === "mouseleave" ||
               transformedX < -SVG_CIRCLE_RADIUS / 4 ||
               transformedX ** 2 + transformedY ** 2 > SVG_CIRCLE_RADIUS ** 2 ||
@@ -199,6 +206,7 @@ const Gooey = ({ color, addMouseHandler, removeMouseHandler }) => {
                 // animating the collapse.
                 await timeout(STRETCH_ANIMATION_TIME);
 
+                // TODO: request animation frame here
                 if (pathRef.current) {
                   pathRef.current.style.transition = `d ${collapseAnimationTime}ms cubic-bezier(.6,.22,.47,1.57)`;
                   pathRef.current.style.d = getCssPath(0, 0);
