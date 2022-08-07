@@ -1,18 +1,3 @@
-/**
- *
- * TODO BEFORE MERGING
- *
- * - performance testing
- * - browser testing (fallback for safari?)
- * - prefers-reduced-motion
- * - move out of useMemo into ref
- * - move measurement functions into event handler
- * - fix h1 top margin on blog post pages, it moved down fro main
- * - fix side margins on logo overflow:hidden when browser window is narrow
- * - should I add more padding around the logo to be able to stretch up/down?
- * - make it pick up on faster mouse movements (?) (sub-frame cascaded events?)
- */
-
 import React, {
   useRef,
   useMemo,
@@ -274,6 +259,13 @@ const Gooey = ({ color, addMouseHandler, removeMouseHandler }) => {
   const onMouseEvent = useRef();
 
   useEffect(() => {
+    if (
+      !CSS.supports("d", 'path("")') ||
+      matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return;
+    }
+
     if (!onMouseEvent.current) {
       onMouseEvent.current = createGooeyMouseEventHandler(
         containerRef,
@@ -288,7 +280,13 @@ const Gooey = ({ color, addMouseHandler, removeMouseHandler }) => {
   const basePath = useMemo(() => getPath(0, 0), []);
 
   return (
-    <div className={styles.container} ref={containerRef}>
+    <div
+      className={classNames(styles.container, {
+        [styles.pink]: color === "pink",
+        [styles.blue]: color === "blue",
+      })}
+      ref={containerRef}
+    >
       <svg
         width="512"
         height="512"
@@ -297,15 +295,7 @@ const Gooey = ({ color, addMouseHandler, removeMouseHandler }) => {
         xmlns="http://www.w3.org/2000/svg"
         className={styles.circleSvg}
       >
-        <path
-          ref={pathRef}
-          className={classNames(styles.path, {
-            [styles.pink]: color === "pink",
-            [styles.blue]: color === "blue",
-          })}
-          id="path"
-          d={basePath}
-        />
+        <path ref={pathRef} className={styles.path} id="path" d={basePath} />
       </svg>
     </div>
   );
