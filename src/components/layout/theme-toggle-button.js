@@ -1,26 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { ThemeToggler } from "gatsby-plugin-dark-mode";
+import classNames from "classnames";
 
-const ThemeToggleButtonText = ({ theme }) => {
-  // Prevent SSR hydration issue since SSR won't know if the
-  // user is using light or dark mode. Hydrate in light mode
-  // on first render, since that's what SSR will render.
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  return theme === "dark" && mounted ? "toggle theme 🌙" : "toggle theme ☀️";
-};
+import * as styles from "./theme-toggle-button.module.css";
 
 const ThemeToggleButton = () => (
   <ThemeToggler>
     {({ theme, toggleTheme }) => (
       <button
-        className="link-button"
+        className={classNames("link-button", styles.themeToggleButton)}
         onClick={() => toggleTheme(theme === "dark" ? "light" : "dark")}
       >
-        <ThemeToggleButtonText theme={theme} />
+        Toggle theme
       </button>
     )}
   </ThemeToggler>

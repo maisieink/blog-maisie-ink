@@ -1,0 +1,13 @@
+.themeToggleButton {
+  text-transform: lowercase;
+}
+
+/* Since the icon varies depending on the theme, add it in CSS so that
+we don't mess up SSR hydration on first render */
+body:global(.dark) .themeToggleButton::after {
+  content: " 🌙";
+}
+
+body:global(.light) .themeToggleButton::after {
+  content: " ☀️";
+}
