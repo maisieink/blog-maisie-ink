@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useStaticQuery, graphql } from "gatsby";
-import Img from "gatsby-image";
+import { GatsbyImage } from "gatsby-plugin-image";
 
 import ThemeToggleButton from "./theme-toggle-button";
 
@@ -22,9 +22,7 @@ const Header = ({ className, minimal }) => {
       }
       bioImage: file(relativePath: { eq: "maisie-johnson.jpg" }) {
         childImageSharp {
-          fixed(width: 64, height: 64) {
-            ...GatsbyImageSharpFixed
-          }
+          gatsbyImageData(layout: FIXED, width: 64, height: 64)
         }
       }
     }
@@ -62,9 +60,10 @@ const Header = ({ className, minimal }) => {
 
       {!minimal && (
         <div className={styles.bio}>
-          <Img
+          <GatsbyImage
             className={styles.bioImage}
-            fixed={data.bioImage.childImageSharp.fixed}
+            image={data.bioImage.childImageSharp.gatsbyImageData}
+            alt="photo of Maisie"
           />
           <div>
             <div>

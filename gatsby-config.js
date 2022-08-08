@@ -13,6 +13,9 @@ module.exports = {
     repoRootUrl: "https://github.com/maisieink/blog-maisie-ink",
     repoMainTree: "/tree/main",
   },
+  flags: {
+    DEV_SSR: true,
+  },
   plugins: [
     // metadata plugins
     {
@@ -46,6 +49,8 @@ module.exports = {
         path: `${__dirname}/src/images`,
       },
     },
+
+    "gatsby-plugin-image",
 
     // markdown blog post plugins
     "gatsby-plugin-sharp",
