@@ -91,4 +91,6 @@
   display: block;
   flex: 0 0 auto;
   margin-right: 1em;
+  overflow: hidden;
+  z-index: 1; /* hack for safari not respecting overflow:hidden with border radius */
 }
