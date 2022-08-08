@@ -22,7 +22,12 @@ const Header = ({ className, minimal }) => {
       }
       bioImage: file(relativePath: { eq: "maisie-johnson.jpg" }) {
         childImageSharp {
-          gatsbyImageData(layout: FIXED, width: 64, height: 64)
+          gatsbyImageData(
+            layout: FIXED
+            width: 64
+            height: 64
+            placeholder: BLURRED
+          )
         }
       }
     }
