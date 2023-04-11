@@ -1,0 +1,43 @@
+.colorTable {
+}
+
+.colorTable th {
+  padding-left: 1.21333rem; /* hack, undo default theme's 0 left padding */
+}
+
+.colorTable td,
+.colorTable th {
+  border: 1px solid var(--rule-color);
+}
+.colorTable .gray {
+  background-color: #efeeee;
+}
+
+.colorTable .green {
+  background-color: #b5fbd9;
+}
+
+.colorTable .orange {
+  background-color: #ffe07a;
+}
+
+.colorTable .purple {
+  background-color: #e0daff;
+}
+
+/* probably should make these theme color variables so we don't have to manually adjust for dark mode, if I end up using them in more posts */
+body:global(.dark) .colorTable .gray {
+  background-color: #272d35;
+}
+
+body:global(.dark) .colorTable .green {
+  background-color: #2e483b;
+}
+
+body:global(.dark) .colorTable .orange {
+  background-color: #5a4500;
+}
+
+body:global(.dark) .colorTable .purple {
+  background-color: #4a407c;
+}

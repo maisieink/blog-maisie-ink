@@ -9,6 +9,7 @@ image: "./good-arrow-small.png"
 import InfoBlock from "../../components/custom-blocks/info-block";
 import DeterminingClusters from "./determining-clusters";
 import Greedy from "./greedy";
+import { Table1, Table2, Table3 } from "./tables";
 
 A while ago, I was working on a proof-of-concept app, where you could group cards into "clusters" on a free-form board. My thought process was that users could use this app to brainstorm ideas, before transferring their ideas to a more structured format like a spreadsheet.
 
@@ -123,19 +124,11 @@ And then...
 
 The matrix I built looked like this:
 
-| a   | b   | c   |
-| --- | --- | --- |
-|     |     |     |
-|     |     |     |
-|     |     |     |
+<Table1 />
 
 Using this matrix, I could determine the optimal mapping between the old and new clusters! I'd choose one cell per column, each from a different row, such that the total sum of "overlapping cards" is as high as possible:
 
-| a   | b   | c   |
-| --- | --- | --- |
-|     |     |     |
-|     |     |     |
-|     |     |     |
+<Table2 />
 
 For this solution,
 
@@ -191,19 +184,11 @@ The minor differences were:
 
 Those differences weren't a significant issue. All we had to do was transform the data in our matrix:
 
-| a   | b   | c   |
-| --- | --- | --- |
-|     |     |     |
-|     |     |     |
-|     |     |     |
+<Table2 />
 
 ...into a format that the assignment problem would accept:
 
-| a   | b   | c   |
-| --- | --- | --- |
-|     |     |     |
-|     |     |     |
-|     |     |     |
+<Table3 />
 
 I added a placeholder column to make the matrix square. The placeholder column represented a new color that hadn't been used in any of the old clusters.
 

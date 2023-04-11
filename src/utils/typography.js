@@ -55,6 +55,15 @@ customizedParnassusTheme.overrideThemeStyles = ({ rhythm }, options) => ({
   "button:not(.link-button)": {
     fontFamily: parnassusTheme.headerFontFamily.join(","),
   },
+  "th, td": {
+    border: `1px solid var(--rule-color)`,
+  },
+  "th:first-child, td:first-child": {
+    paddingLeft: rhythm(2 / 3), // undo the no left padding on first cell, since I added a left border back
+  },
+  "th:last-child, td:last-child": {
+    paddingRight: rhythm(2 / 3),
+  },
 });
 
 const typography = new Typography(customizedParnassusTheme);
