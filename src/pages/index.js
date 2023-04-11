@@ -16,6 +16,7 @@ const IndexPage = () => {
               description
               date(formatString: "MMMM DD, YYYY")
               path
+              externalPath
             }
           }
         }
@@ -43,9 +44,18 @@ const IndexPage = () => {
             return (
               <div className="blog-post-preview" key={post.id}>
                 <h2>
-                  <Link to={post.frontmatter.path}>
-                    {post.frontmatter.title}
-                  </Link>
+                  {post.frontmatter.externalPath ? (
+                    <>
+                      <a href={post.frontmatter.externalPath}>
+                        <span className="blog-post-external">External ↗</span>
+                        {post.frontmatter.title}
+                      </a>
+                    </>
+                  ) : (
+                    <Link to={post.frontmatter.path}>
+                      {post.frontmatter.title}
+                    </Link>
+                  )}
                 </h2>
                 <div className="blog-post-date">{post.frontmatter.date}</div>
                 <p>{post.frontmatter.description}</p>

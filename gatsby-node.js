@@ -15,6 +15,7 @@ exports.createPages = async ({ actions, graphql }) => {
             fileAbsolutePath
             frontmatter {
               path
+              externalPath
             }
           }
         }
@@ -37,6 +38,12 @@ exports.createPages = async ({ actions, graphql }) => {
 
   for (const { node } of result.data.allMdx.edges) {
     const { frontmatter, fileAbsolutePath } = node;
+
+    if (frontmatter.externalPath) {
+      // External posts are links to blog posts on other websites, so we
+      // don't need to create a page for them.
+      continue;
+    }
 
     if (!frontmatter.path) {
       // Some blog posts are split into multiple mdx files--only the
