@@ -4,9 +4,7 @@ import * as styles from "./footer.module.css";
 
 const Footer = () => {
   return (
-    <footer className={styles.footer}>
-      ™©° ☿ something ↻ {new Date().getFullYear()} ??
-    </footer>
+    <footer className={styles.footer}>™©° ☿ something ↻ 2019–202X ??</footer>
   );
 };
 
