@@ -1,0 +1,7 @@
+#### ℹ️ Side topic: how did the app determine when to split clusters?
+
+First off: I'm not a data scientist, and I just fiddled around until I had a UI that felt good to me.
+
+I used hierarchical clustering from a data clustering library. To determine the number of clusters (k), I arbitrarily ran the clustering algorithm for k=2 through k=8. After that, I picked the clustering that had the lowest standard deviation in silhouette coefficients. (Intuitively, this optimized for clusters that had a visually-similar density of cards).
+
+(I also thought hierarchical clustering could help make the "splitting" and "joining" behaviors more feel more intuitive, since k=k-1 would cause two clusters to join together, and so on. The hierarchy wasn't always consistent after card movements, however.)
