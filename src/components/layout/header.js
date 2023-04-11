@@ -15,7 +15,6 @@ const Header = ({ className, minimal }) => {
           firstName
           lastName
           shortDescription
-          twitterUrl
           githubUrl
           aboutMeUrl
         }
@@ -33,14 +32,8 @@ const Header = ({ className, minimal }) => {
     }
   `);
 
-  const {
-    firstName,
-    lastName,
-    shortDescription,
-    twitterUrl,
-    githubUrl,
-    aboutMeUrl,
-  } = data.site.siteMetadata;
+  const { firstName, lastName, shortDescription, githubUrl, aboutMeUrl } =
+    data.site.siteMetadata;
 
   const { containerProps, gooeyProps } = useMouseEventContainer();
 
@@ -75,8 +68,7 @@ const Header = ({ className, minimal }) => {
               {shortDescription} / <ThemeToggleButton />
             </div>
             <div className={styles.bioInfoLineLinks}>
-              <a href={aboutMeUrl}>About me</a> /{" "}
-              <a href={twitterUrl}>Twitter</a> / <a href={githubUrl}>GitHub</a>{" "}
+              <a href={aboutMeUrl}>About me</a> / <a href={githubUrl}>GitHub</a>{" "}
             </div>
           </div>
         </div>

@@ -31,13 +31,13 @@ body:global(.dark) .colorTable .gray {
 }
 
 body:global(.dark) .colorTable .green {
-  background-color: #2e483b;
+  background-color: #2b483f;
 }
 
 body:global(.dark) .colorTable .orange {
-  background-color: #5a4500;
+  background-color: #4c3e2a;
 }
 
 body:global(.dark) .colorTable .purple {
-  background-color: #4a407c;
+  background-color: #402a3b;
 }
