@@ -7,7 +7,7 @@ export const Table1 = () => {
     <table className={styles.colorTable}>
       <thead>
         <tr>
-          <th className={styles.gray}></th>
+          <td className={styles.gray}>1</td>
           <th className={styles.green}>
             old cluster 0 (green) <br />
             [A, C, D, E, F, G, K, L]
@@ -65,7 +65,7 @@ export const Table2 = () => {
     <table className={styles.colorTable}>
       <thead>
         <tr>
-          <th className={styles.gray}></th>
+          <td className={styles.gray}></td>
           <th className={styles.green}>old cluster 0 (green)</th>
           <th className={styles.orange}>old cluster 1 (orange)</th>
         </tr>
@@ -100,7 +100,7 @@ export const Table3 = () => {
     <table className={styles.colorTable}>
       <thead>
         <tr>
-          <th className={styles.gray}></th>
+          <td className={styles.gray}></td>
           <th className={styles.green}>old cluster 0 (green)</th>
           <th className={styles.orange}>old cluster 1 (orange)</th>
           <th className={styles.purple}>(unused)</th>
