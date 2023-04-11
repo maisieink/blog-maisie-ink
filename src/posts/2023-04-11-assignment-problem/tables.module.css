@@ -14,15 +14,15 @@
 }
 
 .colorTable .green {
-  background-color: #b5fbd9;
+  background-color: #80d4bb;
 }
 
 .colorTable .orange {
-  background-color: #ffe07a;
+  background-color: #fed18c;
 }
 
 .colorTable .purple {
-  background-color: #e0daff;
+  background-color: #efbfe4;
 }
 
 /* probably should make these theme color variables so we don't have to manually adjust for dark mode, if I end up using them in more posts */
