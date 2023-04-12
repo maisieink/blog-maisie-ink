@@ -1,14 +1,19 @@
 .colorTable {
+  overflow-x: scroll;
+  margin-bottom: 1.82rem;
+  /* move bottom margin to the div container so it doesn't move the scrollbar */
+  /* 1.82rem is the current theme's rhythm, probably should import it somehow */
 }
 
-.colorTable th {
-  padding-left: 1.21333rem; /* hack, undo default theme's 0 left padding */
+.colorTable table {
+  margin-bottom: 0;
 }
 
 .colorTable td,
 .colorTable th {
   border: 1px solid var(--rule-color);
 }
+
 .colorTable .gray {
   background-color: #efeeee;
 }

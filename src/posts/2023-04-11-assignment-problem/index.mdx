@@ -2,14 +2,14 @@
 path: "/assignment-problem/"
 date: 2023-04-11T17:00:00.000Z
 title: "I can't believe I used an ALGORITHM at work"
-description: "A while ago, I was working on a proof-of-concept app where you could group cards into clusters on a free-form board. I used the Hungarian algorithm to maintain cluster color mappings."
+description: "I was working on a data clustering app. To maintain the cluster color mappings, I reduced the problem to one that could be solved by a well-known algorithm."
 image: "./good-arrow-small.png"
 ---
 
 import InfoBlock from "../../components/custom-blocks/info-block";
 import DeterminingClusters from "./determining-clusters";
 import Greedy from "./greedy";
-import { Table1, Table2, Table3 } from "./tables";
+import { Table1, Table2, Table3, WikipediaTable } from "./tables";
 
 TODO
 
@@ -173,11 +173,7 @@ Eventually, I landed on a wikipedia article about [the Hungarian algorithm](http
 >
 > In this simple example there are three workers: Paul, Dave, and Chris. One of them has to clean the bathroom, another sweep the floors and the third washes the windows, but they each demand different pay for the various tasks. The problem is to find the lowest-cost way to assign the jobs. The problem can be represented in a [matrix](<https://en.wikipedia.org/wiki/Matrix_(mathematics)>) of the costs of the workers doing the jobs. For example:
 >
-> |       | Clean bathroom | Sweep floors | Wash windows |
-> | ----- | -------------- | ------------ | ------------ |
-> | Paul  | $2             | $3           | $3           |
-> | Dave  | $3             | $2           | $3           |
-> | Chris | $3             | $3           | $2           |
+> <WikipediaTable />
 >
 > The Hungarian method, when applied to the above table, would give the minimum cost: this is $6, achieved by having Paul clean the bathroom, Dave sweep the floors, and Chris wash the windows.
 
