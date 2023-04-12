@@ -1,7 +1,7 @@
 ---
 path: "/assignment-problem/"
 date: 2023-04-11T17:00:00.000Z
-title: "I can't believe I used an ALGORITHM at work"
+title: "I can't believe I used an ALGORITHM at work!"
 description: "I was working on a data clustering app. To maintain the cluster color mappings, I reduced the problem to one that could be solved by a well-known algorithm."
 image: "./good-arrow-small.png"
 ---
@@ -10,13 +10,6 @@ import InfoBlock from "../../components/custom-blocks/info-block";
 import DeterminingClusters from "./determining-clusters";
 import Greedy from "./greedy";
 import { Table1, Table2, Table3, WikipediaTable } from "./tables";
-
-TODO
-
-- Make dark mode look better, double check colors
-- Proofread and verify tables and images
-
-TODO
 
 A while ago, I was working on a proof-of-concept app, where you could group cards into "clusters" on a free-form board. My thought process was that users could use this app to brainstorm ideas, before transferring their ideas to a more structured format like a spreadsheet.
 
@@ -39,6 +32,8 @@ Moving the C card split the green cluster in half, creating a new purple cluster
 <InfoBlock>
   <DeterminingClusters />
 </InfoBlock>
+
+## What made this behavior difficult to implement?
 
 For me, the trickiest part was making sure clusters retained the same color after a re-clustering.
 
@@ -150,7 +145,7 @@ This matrix still described the same problem as earlier, but from a different pe
 
 ## Finding a similar problem
 
-At this point, I still hadn't solved the problem I was having. Again, I could intuitively arrive at solutions, but I couldn't describe an algorithm that solved the problem for any given input.
+At this point, I still hadn't _solved_ the problem I was having. Again, I could intuitively arrive at solutions, but I couldn't describe an algorithm that solved the problem for any given input.
 
 <InfoBlock>
   <Greedy />
@@ -202,6 +197,8 @@ With that transformation, I had reduced my obscure problem (how can I maintain c
 The assignment problem can be solved with the Hungarian algorithm, and I was easily able to find an implementation on npm: https://www.npmjs.com/package/munkres-js
 
 That's great! I didn't even have to understand how the algorithm worked. All I had to do was transform my data into a format that the npm module understood, then transform it back into a result that I could use in the app.
+
+The resulting code ended up being pretty succinct:
 
 ```js
 export default function maintainColorMapping(
