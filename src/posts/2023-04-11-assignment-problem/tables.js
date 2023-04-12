@@ -159,22 +159,28 @@ export const WikipediaTable = () => {
         </thead>
         <tbody>
           <tr>
-            <td>Paul</td>
-            <td>$2</td>
-            <td>$3</td>
-            <td>$3</td>
+            <th>Alice</th>
+            <td>
+              <strong>$8</strong>
+            </td>
+            <td>$4</td>
+            <td>$7</td>
           </tr>
           <tr>
-            <td>Dave</td>
-            <td>$3</td>
+            <th>Bob</th>
+            <td>$5</td>
             <td>$2</td>
-            <td>$3</td>
+            <td>
+              <strong>$3</strong>
+            </td>
           </tr>
           <tr>
-            <td>Chris</td>
-            <td>$3</td>
-            <td>$3</td>
-            <td>$2</td>
+            <th>Dora</th>
+            <td>$9</td>
+            <td>
+              <strong>$4</strong>
+            </td>
+            <td>$8</td>
           </tr>
         </tbody>
       </table>
