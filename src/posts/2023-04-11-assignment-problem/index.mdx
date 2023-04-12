@@ -14,7 +14,6 @@ import { Table1, Table2, Table3, WikipediaTable } from "./tables";
 TODO
 
 - Make dark mode look better, double check colors
-- Add alt text to images
 - Proofread and verify tables and images
 
 TODO
@@ -29,11 +28,11 @@ Before we jump into the specific problem, let's take a step back to understand t
 
 Whenever you moved a card, the app would automatically re-cluster all the cards. Depending on the specific movement, the app would sometimes add or delete a cluster. For example, here, I moved the C card from the green cluster...
 
-![](./start-arrow.png)
+![Cards L, G, C, E, A, D, F, K are in the green cluster. Cards B, I, J, H are in the orange cluster. There is an arrow moving card C out of the green cluster into the orange cluster.](./start-arrow.png)
 
 ...into the orange cluster.
 
-![](./good-arrow.png)
+![Cards L, G, E, are in the purple cluster. Cards A, D, F, K are in the green cluster. Cards B, I, J, H are in the orange cluster. There is an arrow moving card C into the orange cluster.](./good-arrow.png)
 
 Moving the C card split the green cluster in half, creating a new purple cluster.
 
@@ -57,7 +56,7 @@ I was using an npm library to calculate the clusters. It would return something 
 
 There wasn't much identifying information for each cluster, so I used the array index to determine each color—the first cluster was green, the second one orange, and so on. This clustering would render our first example above:
 
-![](./start-arrow.png)
+![Cards L, G, C, E, A, D, F, K are in the green cluster. Cards B, I, J, H are in the orange cluster. There is an arrow moving card C out of the green cluster into the orange cluster.](./start-arrow.png)
 
 After the user moved the C card, we'd re-cluster the cards, and the clustering library would sometimes return the clusters in a different order from the last time. For example:
 
@@ -76,7 +75,7 @@ After the user moved the C card, we'd re-cluster the cards, and the clustering l
 
 Since the app was choosing cluster colors based on array index, we'd get this result:
 
-![](./bad-arrow.png)
+![Cards L, G, E, are in the orange cluster. Cards A, D, F, K are in the purple cluster. Cards B, I, J, H are in the green cluster. There is an arrow moving card C into the green cluster.](./bad-arrow.png)
 
 In the app, this was pretty jarring! After dropping the C card in its new location, _every other card_ on the screen changed its color.
 
@@ -90,11 +89,11 @@ To get a more technical goal, I defined the "least noisy animation" as:
 
 Let's see how this definition plays out in our previous example. Again, we start by moving the C card out of the green cluster:
 
-![](./start-arrow.png)
+![Cards L, G, C, E, A, D, F, K are in the green cluster. Cards B, I, J, H are in the orange cluster. There is an arrow moving card C out of the green cluster into the orange cluster.](./start-arrow.png)
 
 We choose to keep the orange cluster orange, since it only got one new card. Since the green cluster split in half, we'll choose the larger half to keep the green color.
 
-![](./good-arrow.png)
+![Cards L, G, E, are in the purple cluster. Cards A, D, F, K are in the green cluster. Cards B, I, J, H are in the orange cluster. There is an arrow moving card C into the orange cluster.](./good-arrow.png)
 
 These choices resulted in only the C, E, G and L cards changing color. That's the fewest possible color changes for our example (which you can manually verify by trying every other permutation 😉).
 
@@ -122,7 +121,7 @@ The next step was to search for _similar_ problems, by rephrasing the problem in
 
 > Ok—(get this!)—we compare every old cluster to every new cluster, and write down how many cards are common between each two? Like this?
 
-![](overlap.png)
+![A diagram visually showing the number of overlapping cards between each old cluster and each new cluster. See table below for the equivalent data.](overlap.png)
 
 😵‍💫 🥴 😵
 
@@ -163,7 +162,7 @@ However, I had _rephrased_ my problem to something that was generalizable and ea
 
 Instead of thinking harder, I went back to googling. I spammed keywords into the search box:
 
-![](./google-search.png)
+![Google search box with text: find best sum of matrix one per column (please)](./google-search.png)
 
 Eventually, I landed on a wikipedia article about [the Hungarian algorithm](https://en.wikipedia.org/wiki/Hungarian_algorithm#The_problem).
 
