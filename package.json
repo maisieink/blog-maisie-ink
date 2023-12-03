@@ -4,6 +4,7 @@
   "description": "thoughts about software development and javascript",
   "version": "0.1.0",
   "author": "Maisie Johnson",
+  "packageManager": "yarn@1.22.21",
   "dependencies": {
     "@mdx-js/mdx": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
